@@ -1,0 +1,18 @@
+services:
+  backend:
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile
+    image: ubuntu
+    ports:
+      - "5252:5252"
+  
+  frontend:
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+    image: nginx
+    ports:
+      - "9000:9000"
+    depends_on:
+      - backend

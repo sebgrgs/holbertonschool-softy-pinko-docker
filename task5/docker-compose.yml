@@ -1,0 +1,35 @@
+services:
+  backend:
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile
+    container_name: softy-pinko-backend
+    networks:
+      - softy-pinko-network
+
+  
+  frontend:
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+    container_name: softy-pinko-frontend
+    networks:
+      - softy-pinko-network
+
+  proxy:
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+    container_name: softy-pinko-proxy
+    image: nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - softy-pinko-network
+
+networks:
+  softy-pinko-network:
+    driver: bridge
